@@ -44,6 +44,7 @@ module.exports = function(){
                     this.creatureList[creatureIndex].name = creature.name;
                     this.creatureList[creatureIndex].age = creature.age;
                     this.creatureList[creatureIndex].skills = creature.skills;
+                    this.creatureList[creatureIndex].like = creature.like;
                     return 1;
                 }else{
                     return 0;

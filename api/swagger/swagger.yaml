@@ -1,12 +1,12 @@
 swagger: "2.0"
 info:
-  version: "0.0.1"
+  version: "1.0.1"
   title: Creature App
 # during dev, should point to your local machine
 host: localhost:10010
-# basePath prefixes all resource paths
+# basePath prefixes all resource paths 
 basePath: /
-#
+# 
 schemes:
   # tip: remove http to make production-grade
   - http
@@ -39,8 +39,8 @@ paths:
       description: add a new creature
       # creature info to be stored
       parameters:
-        - name: title
-          description: Creature properties
+        - name: name
+          description: Creature name
           in: body
           required: true
           schema:
@@ -85,7 +85,7 @@ paths:
           type: string
           in: path
           required: true
-        - name: title
+        - name: name
           description: Creature properties
           in: body
           required: true
@@ -130,27 +130,38 @@ definitions:
       # The array of creatures
       creatures:
         type: array
-        items:
+        items: 
           type: object
           properties:
             id:
               type: string
-            title:
+            name:
               type: string
-            year:
+            age:
               type: number
+            skills:
+              type: string
+            like:
+              type: boolean
   Creature:
     type: object
     properties:
-      title:
+      name:
         type: string
-        description: task object name
-      year:
+        description: creature name
+      age:
         type: number
-        description: task description
+        description: creature age
+      skills:
+        type: string
+        description: creature skills
+      like:
+        type: boolean
+        description: user can choose to like the creature
     required:
-      - title
-      - year
+      - name
+      - age
+      - skills
   GenResponse:
     type: object
     properties:
@@ -159,34 +170,46 @@ definitions:
         description: returns 1 if successful
       description:
         type: string
-        description: a short comment
+        description: description of action
     required:
       - success
       - description
   GetCreature:
       required:
         - id
-        - title
-        - year
+        - name
+        - age
+        - skills
       properties:
         id:
           type: string
-        title:
+        name: 
           type: string
-        year:
+        age:
           type: number
+        skills:
+          type: string
+        like:
+          type: boolean
         Creature:
           type: object
           properties:
-            title:
+            name:
               type: string
-              description: task object name
-            year:
+              description: creature name
+            age:
               type: number
-              description: task description
+              description: creature age
+            skills:
+              type: string
+              description: creature skills
+            like:
+              type: boolean  
+              description: user can choose to like the creature
           required:
-            - title
-            - year
+            - name
+            - age
+            - skills
   ErrResponse:
     required:
       - message
