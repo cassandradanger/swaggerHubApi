@@ -1,0 +1,195 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: Creature App
+# during dev, should point to your local machine
+host: localhost:10010
+# basePath prefixes all resource paths 
+basePath: /
+# 
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+  /creature:
+    # our controller name
+    x-swagger-router-controller: creature
+    get:
+      operationId: getAll
+      description: get the creatures list
+      # define the type of response for Success "200" and Error
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GetCreatureList"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrResponse"
+    post:
+      operationId: save
+      description: add a new creature
+      # creature info to be stored
+      parameters:
+        - name: title
+          description: Creature properties
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Creature"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GenResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrResponse"
+  /creature/{id}:
+    # our controller name
+    x-swagger-router-controller: creature
+    get:
+      operationId: getOne
+      description: get a creature
+      # define the type of response for Success "200" and Error
+      parameters:
+        - name: id
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GetCreature"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrResponse"
+    put:
+      operationId: update
+      description: update a creature
+      # define the parameters
+      parameters:
+        - name: id
+          description: Creature id
+          type: string
+          in: path
+          required: true
+        - name: title
+          description: Creature properties
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Creature"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GenResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrResponse"
+    delete:
+      operationId: delCreature
+      description: delete a creature
+      # define the parameters
+      parameters:
+        - name: id
+          description: Creature id
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GenResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrResponse"
+  /swagger:
+    x-swagger-pipe: swagger_raw
+# complex objects have schema definitions
+definitions:
+  GetCreatureList:
+    required:
+      - creatures
+    properties:
+      # The array of creatures
+      creatures:
+        type: array
+        items: 
+          type: object
+          properties:
+            id:
+              type: string
+            title:
+              type: string
+            year:
+              type: number
+  Creature:
+    type: object
+    properties:
+      title:
+        type: string
+        description: task object name
+      year:
+        type: number
+        description: task description
+    required:
+      - title
+      - year
+  GenResponse:
+    type: object
+    properties:
+      success:
+        type: number
+        description: returns 1 if successful
+      description:
+        type: string
+        description: a short comment 
+    required:
+      - success
+      - description
+  GetCreature:
+      required:
+        - id
+        - title
+        - year
+      properties:
+        id:
+          type: string
+        title: 
+          type: string
+        year:
+          type: number
+        Creature:
+          type: object
+          properties:
+            title:
+              type: string
+              description: task object name
+            year:
+              type: number
+              description: task description
+          required:
+            - title
+            - year
+  ErrResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
