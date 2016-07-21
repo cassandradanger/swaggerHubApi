@@ -4,9 +4,9 @@ info:
   title: Creature App
 # during dev, should point to your local machine
 host: localhost:10010
-# basePath prefixes all resource paths 
+# basePath prefixes all resource paths
 basePath: /
-# 
+#
 schemes:
   # tip: remove http to make production-grade
   - http
@@ -130,7 +130,7 @@ definitions:
       # The array of creatures
       creatures:
         type: array
-        items: 
+        items:
           type: object
           properties:
             id:
@@ -159,7 +159,7 @@ definitions:
         description: returns 1 if successful
       description:
         type: string
-        description: a short comment 
+        description: a short comment
     required:
       - success
       - description
@@ -171,7 +171,7 @@ definitions:
       properties:
         id:
           type: string
-        title: 
+        title:
           type: string
         year:
           type: number

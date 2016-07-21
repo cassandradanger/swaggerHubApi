@@ -1,6 +1,7 @@
 'use strict'
 
-//crypto used to generate creature id
+//crypto used to generate creature id]
+var crypto = require('crypto');
 
 module.exports = function(){
         return{
@@ -9,7 +10,7 @@ module.exports = function(){
             //save creature inside the db
             save(creature){
                 creature.id = crypto.randomBytes(20).toString('hex');
-                thiscreatureList.push(creature);
+                this.creatureList.push(creature);
                 return 1;
             },
             //retrieve creature with a given id
@@ -40,8 +41,9 @@ module.exports = function(){
                         return element.id === id;
                 });
                 if(creatureIndex !== -1) {
-                    this.creatureList[creatureIndex].title = creature.title;
-                    this.creatureList[creatureIndex].year = creature.year;
+                    this.creatureList[creatureIndex].name = creature.name;
+                    this.creatureList[creatureIndex].age = creature.age;
+                    this.creatureList[creatureIndex].skills = creature.skills;
                     return 1;
                 }else{
                     return 0;
